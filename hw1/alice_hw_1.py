@@ -13,11 +13,7 @@ For example, method add_item probably accepts some kind of an item?..
 3. You will need to write some examples of how your code works.
 
 """
-"""
-    TO DELETE BEFORE SENDING:
-    1. Add comments
-    2. Add sample code
-"""
+
 
 class CashRegister:
 
@@ -57,27 +53,35 @@ class CashRegister:
 
         Return: A printed statement
         """
-        for item, price in self.total_items.items():
-            print(f"1 x {item} at £{price}\n")
+        if self.total_items == {}:
+            print("There are no items in the Cash Register.")
+        else:
+            for item, price in self.total_items.items():
+                print(f"1 x {item} at £{price}\n")
 
     def reset_register(self):  # Clears all the items on a list
         self.total_items.clear()
 
 
-# EXAMPLE code run:
+# Client One shows to the register with a toothbrush:
 client_one = CashRegister()
 client_one.add_item({"Toothbrush": 2})
+client_one.add_item({"Melon": 2.6})
+client_one.add_item({"Tomatoes": 1.5})
+
+# Client One checks their shopping list
 client_one.show_items()
-client_one.add_item({"Melon": 2.6, "Tomatoes": 1.5})
-client_one.show_items()
-# # client_one.remove_item("Toothbrush")
-# # client_one.show_items()
+
+# Client One realises that they don't have teeth anymore and don't actually need a toothbrush
+client_one.remove_item("Toothbrush")
+
+# Client One has a coupon for a 20% discount which gets applied to the total price
 client_one.apply_discount(20)
 print(client_one.get_total())
-# client_one.show_items()
-# client_one.reset_register()
-# client_one.show_items()
-# ADD
+
+# After Client One has finished the Cash Register gets reset and the items disappear from the dictionary
+client_one.reset_register()
+client_one.show_items()
 
 
 """
@@ -127,7 +131,9 @@ class CFGStudent(Student):
         self.subjects.pop(subjects)
 
     def students_subjects(self):  # Prints the list of subjects a student is taking
-        print(f"{self.name} took: {self.subjects}")
+        print(f"{self.name} studied:")
+        for item in self.subjects.keys():
+            print(f"- {item}")
 
     def student_mark(self):
         """
@@ -136,21 +142,29 @@ class CFGStudent(Student):
         Return: A printed statement with the student's final grade.
         """
         average_grade = sum(self.subjects.values()) / len(self.subjects)
-        print(f"{self.name} has achieves a {math.floor(average_grade * 100) / 100}.")
+        print(f"{self.name} has achieved a {math.floor(average_grade * 100) / 100}")
 
 
-# peter = Student("Peter Pettigrew", 16, "001", "Software", "rat")
-# peter.school_file()
-# peter.introduction()
+# Student One gets initialized and his information printed
+peter = Student("Peter Pettigrew", 16, "001", "Software", "rat")
+peter.school_file()
+peter.introduction()
 
-# emma = CFGStudent("Emma Watson", 22, "002", "Data")
-# emma.add_subject({"Building an API": 9.2})
-# emma.students_subjects()
-# emma.add_subject({"SQL": 8, "Iterators": 8.7})
-# emma.students_subjects()
-# emma.remove_subject("SQL")
-# emma.students_subjects()
-# emma.student_mark()
+# Student Two gets initialized. This is a CFG student and inherits from the Student class
+emma = CFGStudent("Emma Watson", 22, "002", "Data")
+
+# Student Two's subjects get added and printed to the console
+emma.add_subject({"Building an API": 9.2})
+emma.add_subject({"SQL": 8})
+emma.add_subject({"Iterators": 8.7})
+emma.students_subjects()
+
+# We need to remove a subject from the list and print it again
+emma.remove_subject("SQL")
+emma.students_subjects()
+
+# We need to know the student's average grade
+emma.student_mark()
 
 # class CFGStudent(<should inherit from Student>)
 #     create new methods that manage student's subjects (add/remove new subject and its grade to the dict)
