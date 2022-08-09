@@ -34,11 +34,22 @@ matrix = [
 [99,100,103,106,128,1004]
 ]
 
-target =44
+target = 44
+
 
 def search_in_matrix(matrix, target):
+    result_counter = []
+    row_counter = -1
     for item in matrix:
-        print(item)
+        row_counter +=1
+        for i in item:
+            if i == target:
+                column = item.index(i)
+                result_counter.extend([row_counter, column])
+                return result_counter
+    else:
+        return [-1, -1]
 
 
-search_in_matrix(matrix, target)
+print(search_in_matrix(matrix, target))
+
